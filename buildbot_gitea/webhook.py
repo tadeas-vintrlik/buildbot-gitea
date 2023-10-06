@@ -23,12 +23,12 @@ class GiteaHandler(BaseHookHandler):
         changes = []
 
         # We only care about regular heads or tags
-        match = re.match(r"^refs/(heads|tags)/(.+)$", refname)
+        match = re.match(r"^(refs/(heads|tags)/.+)$", refname)
         if not match:
             log.msg("Ignoring refname '{}': Not a branch or tag".format(refname))
             return changes
 
-        branch = match.group(2)
+        branch = match.group(1)
 
         repository = payload['repository']
         repo_url = repository['ssh_url']
