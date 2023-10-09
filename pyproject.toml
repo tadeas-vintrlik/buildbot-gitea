@@ -1,0 +1,50 @@
+[build-system]
+requires = [
+    "setuptools",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "buildbot-gitea"
+version = "1.7.2"
+authors = [
+  { name="Marvin Pohl", email="hello@lab123.com" },
+]
+description = "buildbot plugin for integration with Gitea."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "buildbot>=3.0.0",
+]
+
+[project.optional-dependencies]
+DEV = [ "tox" ]
+
+[project.entry-points."buildbot.webhooks"]
+gitea = "buildbot_gitea.webhook:gitea"
+
+[project.entry-points."buildbot.steps"]
+Gitea = "buildbot_gitea.step_source:Gitea"
+
+[project.entry-points."buildbot.reporters"]
+GiteaStatusPush = "buildbot_gitea.reporter:GiteaStatusPush"
+
+[project.entry-points."buildbot.util"]
+GiteaAuth = "buildbot_gitea.auth:GiteaAuth"
+
+[tool.setuptools]
+packages = [ "buildbot_gitea" ]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+min_version = 4.0
+env_list =
+    python3.6
+[testenv]
+commands = python -m unittest
+"""
